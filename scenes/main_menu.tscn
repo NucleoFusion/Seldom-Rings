@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://0vqlmnefojij"]
+
+[ext_resource type="Texture2D" uid="uid://ctbt5gw7my3ix" path="res://assets/menu/menu_background.jpg" id="1_rcvg1"]
+[ext_resource type="Script" path="res://scripts/menu/MainMenu.cs" id="1_x5jkx"]
+[ext_resource type="FontFile" uid="uid://d4lpkny8oh26s" path="res://assets/font/Mantinia.otf" id="2_3odk0"]
+[ext_resource type="PackedScene" uid="uid://ct434e36hai2e" path="res://scenes/window_scaler.tscn" id="2_vypcn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bg7wo"]
+font = ExtResource("2_3odk0")
+font_size = 140
+font_color = Color(0.972549, 0.533333, 0, 1)
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1151.0
+offset_bottom = 647.0
+scale = Vector2(1.11317, 1.11287)
+script = ExtResource("1_x5jkx")
+
+[node name="WindowScaler" parent="." instance=ExtResource("2_vypcn")]
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0.653815, 0.704803, 0.851187, 1)
+z_index = -5
+z_as_relative = false
+layout_mode = 0
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 1921.0
+offset_bottom = 1083.0
+scale = Vector2(0.600516, 0.597426)
+texture = ExtResource("1_rcvg1")
+
+[node name="ButtonContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 462.0
+offset_top = 335.0
+offset_right = 691.0
+offset_bottom = 550.0
+scale = Vector2(1, 1.06545)
+
+[node name="Start" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_3odk0")
+theme_override_font_sizes/font_size = 30
+text = "START GAME"
+
+[node name="Quit" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_3odk0")
+theme_override_font_sizes/font_size = 30
+text = "QUIT"
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 175.0
+offset_top = 21.0
+offset_right = 969.0
+offset_bottom = 206.0
+theme_override_font_sizes/font_size = 18
+text = "seldom rings
+"
+label_settings = SubResource("LabelSettings_bg7wo")
