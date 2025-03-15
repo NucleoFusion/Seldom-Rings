@@ -16,7 +16,7 @@ public partial class MainMenu : Control
 	}
 	private void StartPressed()
 	{
-		GetTree().ChangeSceneToFile("res://scenes/game_scene.tscn");
+		GetTree().ChangeSceneToFile("res://GameScene/game_scene.tscn");
 	}
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)

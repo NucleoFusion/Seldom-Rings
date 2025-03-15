@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctbt5gw7my3ix"
-path="res://.godot/imported/menu_background.jpg-0a11fe6f83d80d11ca86d12d59907844.ctex"
+uid="uid://dne648sd8ich6"
+path="res://.godot/imported/Soldier-Death.png-3cbfbea090dd393d8c11193c9bd9ffd4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/menu/menu_background.jpg"
-dest_files=["res://.godot/imported/menu_background.jpg-0a11fe6f83d80d11ca86d12d59907844.ctex"]
+source_file="res://PlayerScene/assets/Soldier-Death.png"
+dest_files=["res://.godot/imported/Soldier-Death.png-3cbfbea090dd393d8c11193c9bd9ffd4.ctex"]
 
 [params]
 

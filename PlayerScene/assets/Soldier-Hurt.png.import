@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dne648sd8ich6"
-path="res://.godot/imported/Soldier-Death.png-624ec7d4a92bf34d6123876b71aeff50.ctex"
+uid="uid://diaofrllneikn"
+path="res://.godot/imported/Soldier-Hurt.png-2742b45cf499581074a809e7c58d48ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player/Soldier-Death.png"
-dest_files=["res://.godot/imported/Soldier-Death.png-624ec7d4a92bf34d6123876b71aeff50.ctex"]
+source_file="res://PlayerScene/assets/Soldier-Hurt.png"
+dest_files=["res://.godot/imported/Soldier-Hurt.png-2742b45cf499581074a809e7c58d48ee.ctex"]
 
 [params]
 

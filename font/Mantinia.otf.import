@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://d4lpkny8oh26s"
-path="res://.godot/imported/Mantinia.otf-da0ced594c22b7b9fb708370905e5449.fontdata"
+path="res://.godot/imported/Mantinia.otf-758073f5e9711084424d1a49cdc65351.fontdata"
 
 [deps]
 
-source_file="res://assets/font/Mantinia.otf"
-dest_files=["res://.godot/imported/Mantinia.otf-da0ced594c22b7b9fb708370905e5449.fontdata"]
+source_file="res://font/Mantinia.otf"
+dest_files=["res://.godot/imported/Mantinia.otf-758073f5e9711084424d1a49cdc65351.fontdata"]
 
 [params]
 
