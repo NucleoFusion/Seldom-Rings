@@ -1,17 +1,28 @@
 using Godot;
 using System;
+using SeldomRings.PlayerScene;
+
+enum PlayerAction
+{
+	IdleOrWalking,
+	Dashing,
+	Blocking,
+	Attacking
+}
 
 public partial class Player : CharacterBody2D
 {
+	// Action Exports
 	[Export] public float Speed = 200f;
 	[Export] public float AttackCooldown = 0.5f;
 	[Export] public float DashCooldown = 0.1f;
 	[Export] public float DashSpeed = 1000f;
 	[Export] public float AttackPower = 50f;
-	[Export] public float Health = 250f;
-	[Export] public float MaxHeals = 3;
-	[Export] public float HealsLeft = 6;
 	
+	//Inventory
+	private Inventory _inventory;
+	
+	private PlayerAction _playerAction = PlayerAction.IdleOrWalking;
 	private AnimatedSprite2D _animatedSprite2D;
 	
 	// Attack Handlers
@@ -22,9 +33,6 @@ public partial class Player : CharacterBody2D
 	private bool _isDashing;
 	private float _dashTimer;
 	
-	//Block Handlers
-	private bool _isBlocking;
-	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -34,41 +42,50 @@ public partial class Player : CharacterBody2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-		HandleDash(delta);
-		if (_isDashing)
+		
+		if(_playerAction == PlayerAction.IdleOrWalking || _playerAction == PlayerAction.Blocking) _playerAction = GetPlayerAction();
+		
+		switch (_playerAction)
 		{
-			MoveAndSlide();
-			return;
+			case PlayerAction.Dashing:
+				HandleDash(delta);
+				break;
+			case PlayerAction.Attacking:
+				HandleAttack(delta);
+				HandleMovement();
+				break;
+			case PlayerAction.Blocking:
+				HandleBlock();
+				HandleMovement();
+				break;
+			case PlayerAction.IdleOrWalking:
+				HandleMovement();
+				break;
 		}
-		
-		HandleBlock();
-		
-		HandleAttack(delta);
-		HandleMovement();
-		if (!_isAttacking) HandleAnimations();
-		
+
+		HandleAnimations();
 		MoveAndSlide();
 	}
 
+	private PlayerAction GetPlayerAction()
+	{
+		if (Input.IsActionJustPressed("dash")) return PlayerAction.Dashing;
+		if (Input.IsActionPressed("attack")) return PlayerAction.Attacking;
+		if (Input.IsActionPressed("block")) return PlayerAction.Blocking;
+
+		return PlayerAction.IdleOrWalking;
+	}
+	
 	private void HandleBlock()
 	{
-		if (Input.IsActionPressed("block") && !_isAttacking)
-		{
-			GD.Print("Blocking");
-			//TODO: Block Animation
-			_isBlocking = true;
-		}
-		else
-		{
-			_isBlocking = false;
-		}
+		// If we add stuff in future, redundant for now	
 	}
 	
 	private void HandleDash(double delta)
 	{
-			Vector2 dashDirection = Velocity;
-	
-			if (Input.IsActionJustPressed("dash") && !_isDashing && !_isAttacking && _dashTimer <= 0)
+		Vector2 dashDirection = Velocity;
+
+		if (_playerAction == PlayerAction.Dashing && !_isDashing )
 		{
 			_isDashing = true;
 			_dashTimer = DashCooldown;
@@ -88,7 +105,7 @@ public partial class Player : CharacterBody2D
 			if (_dashTimer <= 0)
 			{
 				_isDashing = false;
-				//TODO: Animation for dash
+				_playerAction = PlayerAction.IdleOrWalking;
 			}
 		}
 	}
@@ -115,11 +132,11 @@ public partial class Player : CharacterBody2D
 			if (_attackTimer <= 0)
 			{
 				_isAttacking = false;
-				_animatedSprite2D.Play("idle");
+				_playerAction = PlayerAction.IdleOrWalking;
 			}
 		}
 
-		if (Input.IsActionJustPressed("attack") && !_isAttacking)
+		if (_playerAction == PlayerAction.Attacking && !_isAttacking)
 		{
 			_isAttacking = true;
 			_attackTimer = AttackCooldown;
@@ -129,19 +146,27 @@ public partial class Player : CharacterBody2D
 
 	private void HandleAnimations()
 	{
-		if (Velocity.Length() > 0)
+		switch (_playerAction)
 		{
-			_animatedSprite2D.Play("walk");
-			_animatedSprite2D.FlipH = Velocity.X < 0;
-		}
-		else
-		{
-			_animatedSprite2D.Play("idle");
+			case PlayerAction.Blocking:
+				_animatedSprite2D.Play("block");
+				break;
+			case PlayerAction.IdleOrWalking:
+				if (Velocity.Length() > 1)
+				{
+					_animatedSprite2D.Play("walk");
+					
+					GD.Print(Velocity);
+					if (Velocity.X < 0) _animatedSprite2D.FlipH = true;
+					else _animatedSprite2D.FlipH = false; // Check if left facing
+				}
+				else _animatedSprite2D.Play("idle");
+				break;	
 		}
 	}
 
 	public bool IsInvincible()
 	{
-		return _isBlocking || _isDashing;
+		return _playerAction == PlayerAction.Blocking || _playerAction == PlayerAction.Dashing;
 	}
 }

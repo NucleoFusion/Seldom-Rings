@@ -1,9 +1,12 @@
-[gd_scene load_steps=27 format=3 uid="uid://di8s2mfigtmll"]
+[gd_scene load_steps=39 format=3 uid="uid://di8s2mfigtmll"]
 
 [ext_resource type="Script" path="res://PlayerScene/Player.cs" id="1_jj8m1"]
 [ext_resource type="Texture2D" uid="uid://cdjrjdeqee4yb" path="res://PlayerScene/assets/Soldier-Attack01.png" id="2_m436a"]
+[ext_resource type="Texture2D" uid="uid://cvc8tn3xitvqn" path="res://PlayerScene/assets/Soldier-Block.png" id="3_4mkwg"]
 [ext_resource type="Texture2D" uid="uid://c6ih8cmft2qsw" path="res://PlayerScene/assets/Soldier-Idle.png" id="3_s7qx5"]
+[ext_resource type="Texture2D" uid="uid://dne648sd8ich6" path="res://PlayerScene/assets/Soldier-Death.png" id="4_hlatl"]
 [ext_resource type="Texture2D" uid="uid://g8h40ufdrglc" path="res://PlayerScene/assets/Soldier-Walk.png" id="4_lrr5u"]
+[ext_resource type="Texture2D" uid="uid://diaofrllneikn" path="res://PlayerScene/assets/Soldier-Hurt.png" id="5_je3dq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6dvw0"]
 radius = 34.0
@@ -31,6 +34,42 @@ region = Rect2(400, 0, 100, 100)
 [sub_resource type="AtlasTexture" id="AtlasTexture_866fk"]
 atlas = ExtResource("2_m436a")
 region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_etxh6"]
+atlas = ExtResource("3_4mkwg")
+region = Rect2(9, 0, 86, 101)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hajbh"]
+atlas = ExtResource("4_hlatl")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5tt5y"]
+atlas = ExtResource("4_hlatl")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7ksy"]
+atlas = ExtResource("4_hlatl")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0r82f"]
+atlas = ExtResource("4_hlatl")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yxmb"]
+atlas = ExtResource("5_je3dq")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tcxbb"]
+atlas = ExtResource("5_je3dq")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uswly"]
+atlas = ExtResource("5_je3dq")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22coo"]
+atlas = ExtResource("5_je3dq")
+region = Rect2(300, 0, 100, 100)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gfuiv"]
 atlas = ExtResource("3_s7qx5")
@@ -115,6 +154,48 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_etxh6")
+}],
+"loop": true,
+"name": &"block",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hajbh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5tt5y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7ksy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0r82f")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yxmb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tcxbb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uswly")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22coo")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_gfuiv")
 }, {
 "duration": 1.0,
@@ -179,4 +260,5 @@ shape = SubResource("CircleShape2D_6dvw0")
 position = Vector2(-1.52588e-05, 2.99998)
 scale = Vector2(4.30958, 3.55396)
 sprite_frames = SubResource("SpriteFrames_tdxdp")
-animation = &"walk"
+animation = &"block"
+frame_progress = 0.789919
