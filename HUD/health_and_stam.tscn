@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://4kfitgg3rdc"]
+
+[ext_resource type="Texture2D" uid="uid://dukj0jce41k3a" path="res://HUD/assets/ProgressBarSPrite.png" id="1_roi4g"]
+[ext_resource type="Texture2D" uid="uid://d2mqckvqtaqcj" path="res://HUD/assets/healthSprite.png" id="2_j37tt"]
+[ext_resource type="Texture2D" uid="uid://q8fe0jxm310v" path="res://HUD/assets/stamSprite.png" id="3_uwe1x"]
+
+[node name="HealthAndStam" type="Node2D"]
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+offset_right = 39.0
+offset_bottom = 35.0
+scale = Vector2(8.12791, 8.2339)
+value = 100.0
+texture_under = ExtResource("1_roi4g")
+texture_progress = ExtResource("2_j37tt")
+
+[node name="StamBar" type="TextureProgressBar" parent="HealthBar"]
+z_index = 2
+layout_mode = 0
+offset_left = 0.246066
+offset_top = 4.61507
+offset_right = 40.2461
+offset_bottom = 44.6151
+max_value = 70.0
+value = 70.0
+texture_progress = ExtResource("3_uwe1x")
+
+[node name="StamRegen" type="Timer" parent="."]
+autostart = true

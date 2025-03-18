@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://r00imjbux8x5"]
+
+[ext_resource type="PackedScene" uid="uid://4kfitgg3rdc" path="res://HUD/health_and_stam.tscn" id="1_0df7e"]
+[ext_resource type="Texture2D" uid="uid://cvc8tn3xitvqn" path="res://PlayerScene/assets/Soldier-Block.png" id="2_rlsan"]
+[ext_resource type="Texture2D" uid="uid://6ldaqigjmtu7" path="res://HUD/assets/CirclepSprite.png" id="3_intx1"]
+
+[node name="HUD" type="Node2D"]
+
+[node name="HealthAndStam" parent="." instance=ExtResource("1_0df7e")]
+position = Vector2(182, -71)
+scale = Vector2(1.22706, 1.01354)
+
+[node name="ProfilePic" type="Node2D" parent="."]
+position = Vector2(44, -52)
+scale = Vector2(6.58953, 5.09004)
+
+[node name="Character" type="Sprite2D" parent="ProfilePic"]
+position = Vector2(4.85619, 24.9507)
+scale = Vector2(0.789603, 0.933419)
+texture = ExtResource("2_rlsan")
+
+[node name="Circle" type="Sprite2D" parent="ProfilePic"]
+position = Vector2(7.58779, 23.5755)
+texture = ExtResource("3_intx1")

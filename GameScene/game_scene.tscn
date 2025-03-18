@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://yelghm4rh3g5"]
+[gd_scene load_steps=4 format=3 uid="uid://yelghm4rh3g5"]
 
 [ext_resource type="PackedScene" uid="uid://di8s2mfigtmll" path="res://PlayerScene/player.tscn" id="1_7heou"]
+[ext_resource type="PackedScene" uid="uid://b8h2ncanthsmj" path="res://GameManager/game_manager.tscn" id="2_jebuh"]
+[ext_resource type="PackedScene" uid="uid://r00imjbux8x5" path="res://HUD/hud.tscn" id="3_wpo55"]
 
 [node name="GameScene" type="Node2D"]
 
@@ -11,3 +13,7 @@ scale = Vector2(1.13534, 1.06612)
 
 [node name="Player" parent="." instance=ExtResource("1_7heou")]
 position = Vector2(640, 384)
+
+[node name="GameManager" parent="." instance=ExtResource("2_jebuh")]
+
+[node name="HUD" parent="." instance=ExtResource("3_wpo55")]

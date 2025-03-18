@@ -260,5 +260,4 @@ shape = SubResource("CircleShape2D_6dvw0")
 position = Vector2(-1.52588e-05, 2.99998)
 scale = Vector2(4.30958, 3.55396)
 sprite_frames = SubResource("SpriteFrames_tdxdp")
-animation = &"block"
-frame_progress = 0.789919
+animation = &"walk"

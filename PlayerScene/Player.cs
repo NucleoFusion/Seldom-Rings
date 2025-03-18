@@ -7,7 +7,8 @@ enum PlayerAction
 	IdleOrWalking,
 	Dashing,
 	Blocking,
-	Attacking
+	Attacking,
+	Death
 }
 
 public partial class Player : CharacterBody2D
@@ -18,9 +19,19 @@ public partial class Player : CharacterBody2D
 	[Export] public float DashCooldown = 0.1f;
 	[Export] public float DashSpeed = 1000f;
 	[Export] public float AttackPower = 50f;
+	[Export] public int MaxHealth = 100;
+	[Export] public int MaxStam = 70;
 	
 	//Inventory
 	private Inventory _inventory;
+	private PlayerStats stats;
+	
+	//Health Handlers
+	private int _currHealth;
+	private int _currStam;
+	private TextureProgressBar _healthBar;
+	private TextureProgressBar _stamBar;
+	private Timer _stamTimer;
 	
 	private PlayerAction _playerAction = PlayerAction.IdleOrWalking;
 	private AnimatedSprite2D _animatedSprite2D;
@@ -37,8 +48,37 @@ public partial class Player : CharacterBody2D
 	public override void _Ready()
 	{
 		_animatedSprite2D = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+
+		_healthBar = GetTree().Root.GetNode<TextureProgressBar>("GameScene/HUD/HealthAndStam/HealthBar");
+		_stamBar = GetTree().Root.GetNode<TextureProgressBar>("GameScene/HUD/HealthAndStam/HealthBar/StamBar");
+		_stamTimer = GetTree().Root.GetNode<Timer>("GameScene/HUD/HealthAndStam/StamRegen");
+		
+		_stamTimer.Timeout += ApplyRegen;
+			
+		_currHealth = MaxHealth;
+		_currStam = MaxStam;
 	}
 
+	public override void _Process(double delta)
+	{
+		if (_currHealth <= 0) HandleDeath();
+		
+		UpdateBars();
+	}
+
+	private void ApplyRegen()
+	{
+		if (_currStam < MaxStam) _currStam += 5;
+	}
+
+	private void UpdateBars()
+	{
+		GD.Print("HEALTH: ",_currHealth ," STAM:",  _currStam);
+		
+		_healthBar.Value = _currHealth;
+		_stamBar.Value = _currStam;
+	}
+	
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
@@ -85,7 +125,7 @@ public partial class Player : CharacterBody2D
 	{
 		Vector2 dashDirection = Velocity;
 
-		if (_playerAction == PlayerAction.Dashing && !_isDashing )
+		if (_playerAction == PlayerAction.Dashing && !_isDashing && _currStam > 0)
 		{
 			_isDashing = true;
 			_dashTimer = DashCooldown;
@@ -94,6 +134,8 @@ public partial class Player : CharacterBody2D
 			dashDirection = dashDirection.Normalized();
 			
 			Velocity = dashDirection * DashSpeed;
+
+			_currStam -= 20;
 		}
 		
 		if (_isDashing)
@@ -136,11 +178,14 @@ public partial class Player : CharacterBody2D
 			}
 		}
 
-		if (_playerAction == PlayerAction.Attacking && !_isAttacking)
+		if (_playerAction == PlayerAction.Attacking && !_isAttacking && _currStam > 0)
 		{
 			_isAttacking = true;
 			_attackTimer = AttackCooldown;
 			_animatedSprite2D.Play("attack");
+
+			_currHealth -= 10;
+			_currStam -= 5;
 		}
 	}
 
@@ -156,7 +201,6 @@ public partial class Player : CharacterBody2D
 				{
 					_animatedSprite2D.Play("walk");
 					
-					GD.Print(Velocity);
 					if (Velocity.X < 0) _animatedSprite2D.FlipH = true;
 					else _animatedSprite2D.FlipH = false; // Check if left facing
 				}
@@ -165,6 +209,11 @@ public partial class Player : CharacterBody2D
 		}
 	}
 
+	private void HandleDeath()
+	{
+		_animatedSprite2D.Play("death");
+	}
+	
 	public bool IsInvincible()
 	{
 		return _playerAction == PlayerAction.Blocking || _playerAction == PlayerAction.Dashing;
